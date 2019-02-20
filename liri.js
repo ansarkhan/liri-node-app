@@ -14,7 +14,7 @@ TO DOS
 - Give it a command line interface
 - add in date time module
 - default for Spotify API
-
+- catch errors
 */
 
 // Concert API
@@ -24,7 +24,9 @@ function concertThis(arg) {
     axios.get(queryURL).then(
         function(response) {
             var events = response.data;
+            // console.log(`-- Upcoming concerts for ${arg} --`)
             events.forEach(element => {
+                console.log('');
                 console.log(`Venue: ${element.venue.name}`);
                 console.log(`Venue location: ${element.venue.city}, ${element.venue.country}`);
                 console.log(`Date: ${element.datetime}`);
@@ -65,6 +67,7 @@ function movieThis(arg) {
     axios.get(queryURL).then(
         function(response) {
             var movie = response.data
+            console.log('');
             console.log(`Title: ${movie.Title}`);
             console.log(`Release Year: ${movie.Year}`);
             console.log(`IMDB Rating: ${movie.imdbRating}`);
