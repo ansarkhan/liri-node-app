@@ -9,11 +9,10 @@ var arg1 = process.argv[2];
 var arg2 = process.argv[3];
 
 
+
 /*
 TO DOS
-- Give it a command line interface
 - add in date time module
-- default for Spotify API
 - catch errors
 */
 
@@ -29,7 +28,7 @@ function concertThis(arg) {
                 console.log('');
                 console.log(`Venue: ${element.venue.name}`);
                 console.log(`Venue location: ${element.venue.city}, ${element.venue.country}`);
-                console.log(`Date: ${element.datetime}`);
+                console.log(`Date: ${moment(element.datetime).format('YYYY MM DD')}`);
                 console.log('------------');
             });
         }
@@ -44,7 +43,9 @@ function spotifyThisSong(arg) {
       secret: keys.spotify.secret,
     });
 
-    // default to The Sign;
+    if (arg == undefined) {
+        arg = 'The Sign';
+    }
      
     spotify.search({ type: 'track', query: arg }, function(err, data) {
       if (err) {
@@ -52,7 +53,8 @@ function spotifyThisSong(arg) {
       }
 
       var song = data.tracks.items[0];
-  
+      
+      console.log('');
       console.log(`Artist: ${song.artists[0].name}`);
       console.log(`Song: ${song.name}`);
       console.log(`Song Preview: ${song.preview_url}`);
@@ -122,6 +124,11 @@ switch(arg1) {
         break;
 
     case 'spotify-this-song':
+        // if (arg2 == '') {
+        //     spotifyThisSong('The Sign')
+        // } else {
+        //     spotifyThisSong(arg2);
+        // }
         spotifyThisSong(arg2);
         break;
 
