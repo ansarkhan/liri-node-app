@@ -10,12 +10,6 @@ var arg2 = process.argv[3];
 
 
 
-/*
-TO DOS
-- add in date time module
-- catch errors
-*/
-
 // Concert API
 function concertThis(arg) {
     var queryURL = `https://rest.bandsintown.com/artists/${arg}/events?app_id=codingbootcamp`;
@@ -23,12 +17,12 @@ function concertThis(arg) {
     axios.get(queryURL).then(
         function(response) {
             var events = response.data;
-            // console.log(`-- Upcoming concerts for ${arg} --`)
+
             events.forEach(element => {
                 console.log('');
                 console.log(`Venue: ${element.venue.name}`);
                 console.log(`Venue location: ${element.venue.city}, ${element.venue.country}`);
-                console.log(`Date: ${moment(element.datetime).format('YYYY MM DD')}`);
+                console.log(`Date: ${moment(element.datetime).format('MM/DD/YYYY')}`);
                 console.log('------------');
             });
         }
@@ -44,7 +38,7 @@ function spotifyThisSong(arg) {
     });
 
     if (arg == undefined) {
-        arg = 'The Sign';
+        arg = 'hello';
     }
      
     spotify.search({ type: 'track', query: arg }, function(err, data) {
@@ -69,6 +63,7 @@ function movieThis(arg) {
     axios.get(queryURL).then(
         function(response) {
             var movie = response.data
+
             console.log('');
             console.log(`Title: ${movie.Title}`);
             console.log(`Release Year: ${movie.Year}`);
@@ -78,6 +73,7 @@ function movieThis(arg) {
             console.log(`Language(s): ${movie.Language}`);
             console.log(`Plot: ${movie.Plot}`);
             console.log(`Actors: ${movie.Actors}`);
+
         }
     )
 };
@@ -115,6 +111,7 @@ function doWhatItSays() {
       });
 }
 
+
 // main switch statement
 
 switch(arg1) {
@@ -124,11 +121,6 @@ switch(arg1) {
         break;
 
     case 'spotify-this-song':
-        // if (arg2 == '') {
-        //     spotifyThisSong('The Sign')
-        // } else {
-        //     spotifyThisSong(arg2);
-        // }
         spotifyThisSong(arg2);
         break;
 
@@ -141,5 +133,12 @@ switch(arg1) {
         break;
 
     default:
-      console.log("choose another option");
+  
+      console.log('');
+      console.log('Your options are:');
+      console.log('1. concert-this <band name>')
+      console.log('2. movie-this <movie name>')
+      console.log('3. spotify-this-song <song name>')
+      console.log('4. update the random.txt file and then pass do-what-it-says as the only command line argument')
+
   };
